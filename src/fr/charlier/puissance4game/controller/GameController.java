@@ -12,6 +12,7 @@ public class GameController {
     public GameBoard model = null;
 
 
+
     public GameController(GameBoard model) {
         this.model = model;
         mainFrameView = new MainFrame(this);

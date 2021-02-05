@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="27116a6b-874f-4216-9980-669d5e86c08e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/charlier/puissance4game/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/charlier/puissance4game/controller/GameController.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -39,16 +40,25 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/fr/charlier/puissance4game/controller/GameController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="14" column="44" selection-start-line="14" selection-start-column="44" selection-end-line="14" selection-end-column="44" />
+            <state relative-caret-position="204">
+              <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1943#1944#0" expanded="true" />
                 <element signature="e#1982#1983#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/fr/charlier/puissance4game/controller/TestGitHub.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" column="23" selection-start-line="2" selection-start-column="23" selection-end-line="2" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -148,9 +158,9 @@
         <option value="$PROJECT_DIR$/src/fr/charlier/puissance4game/model/Board.java" />
         <option value="$PROJECT_DIR$/src/fr/charlier/puissance4game/games/GameSequence.java" />
         <option value="$PROJECT_DIR$/src/fr/charlier/puissance4game/controller/GameView.java" />
-        <option value="$PROJECT_DIR$/src/fr/charlier/puissance4game/controller/GameController.java" />
         <option value="$PROJECT_DIR$/src/fr/charlier/puissance4game/view/MainFrame.java" />
         <option value="$PROJECT_DIR$/src/fr/charlier/puissance4game/games/GameBoard.java" />
+        <option value="$PROJECT_DIR$/src/fr/charlier/puissance4game/controller/GameController.java" />
       </list>
     </option>
   </component>
@@ -172,6 +182,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -249,8 +261,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -350,17 +360,19 @@
       <workItem from="1612200076233" duration="12000" />
       <workItem from="1612433455389" duration="179000" />
       <workItem from="1612434451473" duration="1898000" />
+      <workItem from="1612518151269" duration="918000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="461670000" />
+    <option name="totallyTimeSpent" value="462588000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="2248" y="149" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49916804" visible="true" weight="0.19172932" />
-      <window_info id="Structure" order="1" sideWeight="0.50083196" side_tool="true" visible="true" weight="0.19172932" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49804434" visible="true" weight="0.1944146" />
+      <window_info id="Structure" order="1" sideWeight="0.5019557" side_tool="true" visible="true" weight="0.1944146" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
       <window_info id="Capture Tool" order="4" />
@@ -378,7 +390,7 @@
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Messages" order="10" weight="0.3277592" />
       <window_info anchor="bottom" id="Database Changes" order="11" />
-      <window_info active="true" anchor="bottom" id="Version Control" order="12" visible="true" weight="0.32998884" />
+      <window_info anchor="bottom" id="Version Control" order="12" visible="true" weight="0.14492753" />
       <window_info anchor="bottom" id="Duplicate detector" order="13" weight="0.3292683" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.24919441" />
@@ -431,21 +443,26 @@
         </entry>
       </map>
     </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list />
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/Downloads/puissance4_01/PROJET/Case.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/fr/charlier/puissance4game/view/BackgroundPicture.java" />
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/src.zip!/javax/swing/JInternalFrame.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -744,13 +761,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/fr/charlier/puissance4game/controller/GameController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="44" selection-start-line="14" selection-start-column="44" selection-end-line="14" selection-end-column="44" />
+        <state relative-caret-position="204">
+          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1943#1944#0" expanded="true" />
             <element signature="e#1982#1983#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/fr/charlier/puissance4game/controller/TestGitHub.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="23" selection-start-line="2" selection-start-column="23" selection-end-line="2" selection-end-column="23" />
         </state>
       </provider>
     </entry>
