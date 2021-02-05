@@ -14,8 +14,11 @@ public class MainFrame extends GameView implements ActionListener, ComponentList
 
     JFrame jFrame = null;
     JPanel mainPanel = null;
-    JLayeredPane jLayeredPane = null;
-    JPanelImage imagePanelBackground = new JPanelImage("salon.png");
+    JLayeredPane jLayeredPaneSecond = null;
+    JLayeredPane jLayeredPane1First =null;
+    JPanelImage backgroundImageSecondPanel = new JPanelImage("salon.png");
+    JPanelImage beackgroundImageFirstPanel = new JPanelImage("salon.png");
+    JPanel welcomePanel = new JPanel();
     JPanelPlayers jPanelLeft = new JPanelPlayers(Constante.TOKEN_COLOR_PLAYER1, "PLAYER 1");
     JPanelPlayers jPanelRight = new JPanelPlayers(Constante.TOKEN_COLOR_PLAYER2, "PLAYER 2");
     JPanelWinner jPanelWinner = new JPanelWinner();
@@ -23,6 +26,7 @@ public class MainFrame extends GameView implements ActionListener, ComponentList
     JPanelAnimate ajp = new JPanelAnimate();
     JButton buttonStart = null;
     JButton buttonClose = null;
+    JButton buttonChoice = null;
 
     Boolean start = true;
     Dimension size = null;
@@ -53,10 +57,23 @@ public class MainFrame extends GameView implements ActionListener, ComponentList
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
         mainPanel.addComponentListener(this);
 
-        jLayeredPane = new JLayeredPane();
-        jLayeredPane.setBackground(Color.blue);
+        /*  Creation du premier ecran*/
 
-        imagePanelBackground.setBounds(0, 0, 800, 700);
+        jLayeredPane1First = new JLayeredPane();
+        beackgroundImageFirstPanel.setBounds(0, 0, 1000, 700);
+        buttonChoice = new JButton("toto");
+        buttonChoice.setBounds(50, 900, 100, 50);
+        buttonChoice.addActionListener(this);
+        welcomePanel.setBounds(400,100,800,800);
+        welcomePanel.setBackground(Color.red);
+        welcomePanel.add(buttonChoice);
+        jLayeredPane1First.add(beackgroundImageFirstPanel, new Integer(0),0);
+        jLayeredPane1First.add(welcomePanel, new Integer(1),1);
+
+        /*Creation du deuxieme ecran*/
+        jLayeredPaneSecond = new JLayeredPane();
+
+        backgroundImageSecondPanel.setBounds(0, 0, 800, 700);
         jPanelLeft.setBounds(50, 300, Constante.JPANEL_ESTWEST_WIDTH, Constante.JPANEL_ESTWEST_HEIGHT);
         jPanelRight.setBounds(1700, 300, Constante.JPANEL_ESTWEST_WIDTH, Constante.JPANEL_ESTWEST_HEIGHT);
 
@@ -78,17 +95,19 @@ public class MainFrame extends GameView implements ActionListener, ComponentList
         buttonClose.setBounds(1750, 900, 100, 50);
         buttonClose.addActionListener(this);
 
-        jLayeredPane.add(imagePanelBackground, new Integer(0), 0);
-        jLayeredPane.add(jPanelLeft, new Integer(1), 1);
-        jLayeredPane.add(jPanelRight, new Integer(1), 1);
-        jLayeredPane.add(ajp, new Integer(3), 3);
-        jLayeredPane.add(imagePanelFont, new Integer(4), 4);
-        jLayeredPane.add(jPanelWinner, new Integer(5), 5);
-        jLayeredPane.add(buttonStart, new Integer(1), 1);
-        jLayeredPane.add(buttonClose, new Integer(1), 1);
+        jLayeredPaneSecond.add(backgroundImageSecondPanel, new Integer(0), 0);
+        jLayeredPaneSecond.add(jPanelLeft, new Integer(1), 1);
+        jLayeredPaneSecond.add(jPanelRight, new Integer(1), 1);
+        jLayeredPaneSecond.add(ajp, new Integer(3), 3);
+        jLayeredPaneSecond.add(imagePanelFont, new Integer(4), 4);
+        jLayeredPaneSecond.add(jPanelWinner, new Integer(5), 5);
+        jLayeredPaneSecond.add(buttonStart, new Integer(1), 1);
+        jLayeredPaneSecond.add(buttonClose, new Integer(1), 1);
 
-        mainPanel.add(jLayeredPane);
+        /*  adjonction des panels    */
+        mainPanel.add(jLayeredPane1First);
         jFrame.setContentPane(mainPanel);
+
     }
 
 
@@ -167,8 +186,16 @@ public class MainFrame extends GameView implements ActionListener, ComponentList
         ajp.repaint();
     }
 
+    @Override
+    public void changeScreen(GameChangedEvent event) {
+          mainPanel.remove(jLayeredPane1First);
+            mainPanel.add(jLayeredPaneSecond);
+            mainPanel.revalidate();
+        System.out.println("click toto sur edt"+ SwingUtilities.isEventDispatchThread());
+    }
 
-   /* Click on button start*/
+
+    /* Click on button start*/
     @Override
     public void actionPerformed(ActionEvent e) {
         mouseListenerActivated();
@@ -183,6 +210,14 @@ public class MainFrame extends GameView implements ActionListener, ComponentList
         } else if (e.getSource() == buttonClose) {
             getController().closeView();
         }
+        else if (e.getSource() == buttonChoice ){
+            getController().notifyPlayersSelected();
+           /* mainPanel.remove(jLayeredPane1First);
+            mainPanel.add(jLayeredPaneSecond);
+            mainPanel.revalidate();*/
+
+         //   System.out.println("MAINFRAME  is mousse listener super ca marche2 + mousse =" + " dans le thread EDT = " + SwingUtilities.isEventDispatchThread());
+        }
     }
 
     /**
@@ -195,12 +230,14 @@ public class MainFrame extends GameView implements ActionListener, ComponentList
 
         size = mainPanel.getSize();
         size.setSize(mainPanel.getHeight() * 2.03, mainPanel.getHeight());
-        imagePanelBackground.setSize(size);
+        beackgroundImageFirstPanel.setSize(size);
+        backgroundImageSecondPanel.setSize(size);
         jPanelLeft.setSize(mainPanel.getWidth() / 8, mainPanel.getHeight() / 2);
         jPanelRight.setSize(mainPanel.getWidth() / 8, mainPanel.getHeight() / 2);
         jPanelRight.setLocation((mainPanel.getWidth() / 8 * 7) - 50, 300);
         imagePanelFont.setLocation((mainPanel.getWidth() / 2) - (imagePanelFont.getWidth() / 2), (mainPanel.getHeight() / 2) - (imagePanelFont.getHeight() / 2));
         ajp.setLocation(imagePanelFont.getX(), imagePanelFont.getY() - 100);
+        welcomePanel.setLocation(imagePanelFont.getX(), imagePanelFont.getY());
         jPanelWinner.setLocation(imagePanelFont.getX(), (imagePanelFont.getHeight() / 2) + Constante.JPANEL_WINNER_HEIGHT);
     }
 

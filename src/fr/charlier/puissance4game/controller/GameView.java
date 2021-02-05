@@ -19,6 +19,8 @@ public abstract class GameView implements GameListener {
 
     public abstract void close();
 
+   // public abstract void changeVue();
+
     public abstract void displayWinner();
 
     public abstract void mouseListenerActivated();

@@ -47,6 +47,11 @@ public class GameController {
         model.start();
     }
 
+    public void notifyPlayersSelected(){
+        model.playersSelected();
+
+    }
+
     public void notifyGameRestart() {
         model.reStart();
         model.changePlayer();

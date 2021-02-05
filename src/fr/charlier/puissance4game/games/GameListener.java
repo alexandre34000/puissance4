@@ -9,4 +9,5 @@ public interface GameListener extends EventListener {
     public void playerChanged(GameChangedEvent event);
     public void winnerFounded(GameChangedEvent event);
     public void restartInvoked(GameChangedEvent event);
+    public void changeScreen(GameChangedEvent event);
 }

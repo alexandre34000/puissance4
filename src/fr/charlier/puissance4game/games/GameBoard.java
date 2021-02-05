@@ -36,6 +36,10 @@ public class GameBoard {
         player2 = new Player("Player 2", Constante.TOKEN_COLOR_PLAYER2);
     }
 
+    public void playersSelected(){
+        fireChangeScreen();
+    }
+
     public void reStart() {
         clearArrayBoard();
         buildArrayBoard();
@@ -383,5 +387,16 @@ public class GameBoard {
             listener.restartInvoked(new GameChangedEvent(this));
         }
     }
+
+    public void fireChangeScreen(){
+        GameListener[] listenerList = listeners.getListeners(GameListener.class);
+
+        for (GameListener listener : listenerList) {
+
+            listener.changeScreen(new GameChangedEvent(this));
+        }
+    }
+
+
 
 }

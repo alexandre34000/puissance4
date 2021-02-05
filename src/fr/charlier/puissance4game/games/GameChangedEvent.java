@@ -51,6 +51,11 @@ public class GameChangedEvent extends EventObject {
         super(source);
     }
 
+
+
+
+
+
     public Color getNewColor() {
         return newColor;
     }
