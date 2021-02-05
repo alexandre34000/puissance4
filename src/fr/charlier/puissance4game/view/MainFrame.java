@@ -15,7 +15,7 @@ public class MainFrame extends GameView implements ActionListener, ComponentList
     JFrame jFrame = null;
     JPanel mainPanel = null;
     JLayeredPane jLayeredPaneSecond = null;
-    JLayeredPane jLayeredPane1First =null;
+    JLayeredPane jLayeredPane1First = null;
     JPanelImage backgroundImageSecondPanel = new JPanelImage("salon.png");
     JPanelImage beackgroundImageFirstPanel = new JPanelImage("salon.png");
     JPanel welcomePanel = new JPanel();
@@ -30,6 +30,7 @@ public class MainFrame extends GameView implements ActionListener, ComponentList
 
     Boolean start = true;
     Dimension size = null;
+    Boolean isMouseListener = false;
 
 
     public MainFrame(GameController controller) {
@@ -61,14 +62,14 @@ public class MainFrame extends GameView implements ActionListener, ComponentList
 
         jLayeredPane1First = new JLayeredPane();
         beackgroundImageFirstPanel.setBounds(0, 0, 1000, 700);
-        buttonChoice = new JButton("toto");
+        buttonChoice = new JButton("Valider");
         buttonChoice.setBounds(50, 900, 100, 50);
         buttonChoice.addActionListener(this);
-        welcomePanel.setBounds(400,100,800,800);
+        welcomePanel.setBounds(400, 100, 800, 800);
         welcomePanel.setBackground(Color.red);
         welcomePanel.add(buttonChoice);
-        jLayeredPane1First.add(beackgroundImageFirstPanel, new Integer(0),0);
-        jLayeredPane1First.add(welcomePanel, new Integer(1),1);
+        jLayeredPane1First.add(beackgroundImageFirstPanel, new Integer(0), 0);
+        jLayeredPane1First.add(welcomePanel, new Integer(1), 1);
 
         /*Creation du deuxieme ecran*/
         jLayeredPaneSecond = new JLayeredPane();
@@ -87,11 +88,11 @@ public class MainFrame extends GameView implements ActionListener, ComponentList
         imagePanelFont.setBounds(400, 200, Constante.JPANEL_FONT_WIDTH, Constante.JPANEL_FONT_HEIGHT);
         imagePanelFont.setOpaque(false);
         //  imagePanelFont.addMouseListener(new MyMouseAdapter() );
-        buttonStart = new JButton("start");
+        buttonStart = new JButton("Start");
         buttonStart.setBounds(50, 900, 100, 50);
         buttonStart.addActionListener(this);
 
-        buttonClose = new JButton("close");
+        buttonClose = new JButton("Close");
         buttonClose.setBounds(1750, 900, 100, 50);
         buttonClose.addActionListener(this);
 
@@ -118,17 +119,21 @@ public class MainFrame extends GameView implements ActionListener, ComponentList
 
     @Override
     public void mouseListenerActivated() {
+        if (!isMouseListener) {
+            isMouseListener = true;
+            imagePanelFont.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseReleased(MouseEvent evt) {
+                    //  super.mouseReleased(evt);
+                    imagePanelFont.removeMouseListener(this);
+                    getController().notifyPointChanged(evt.getPoint());
+                    isMouseListener = false;
 
-        imagePanelFont.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseReleased(MouseEvent evt) {
-                //  super.mouseReleased(evt);
-                imagePanelFont.removeMouseListener(this);
-                getController().notifyPointChanged(evt.getPoint());
+                    System.out.println("MAINFRAME  is mousse listener super ca marche2 + mousse =" + " dans le thread EDT = " + SwingUtilities.isEventDispatchThread());
+                }
+            });
 
-                System.out.println("MAINFRAME  is mousse listener super ca marche2 + mousse =" + " dans le thread EDT = " + SwingUtilities.isEventDispatchThread());
-            }
-        });
+        }
     }
 
     @Override
@@ -188,35 +193,30 @@ public class MainFrame extends GameView implements ActionListener, ComponentList
 
     @Override
     public void changeScreen(GameChangedEvent event) {
-          mainPanel.remove(jLayeredPane1First);
-            mainPanel.add(jLayeredPaneSecond);
-            mainPanel.revalidate();
-        System.out.println("click toto sur edt"+ SwingUtilities.isEventDispatchThread());
+        mainPanel.remove(jLayeredPane1First);
+        mainPanel.add(jLayeredPaneSecond);
+        mainPanel.revalidate();
+        System.out.println("click toto sur edt" + SwingUtilities.isEventDispatchThread());
     }
 
 
     /* Click on button start*/
     @Override
     public void actionPerformed(ActionEvent e) {
-        mouseListenerActivated();
         if (e.getSource() == buttonStart) {
             if (start) {
                 getController().notifyGameStart();
+                mouseListenerActivated();
                 buttonStart.setText("reStart");
                 start = false;
             } else {
                 getController().notifyGameRestart();
+                mouseListenerActivated();
             }
         } else if (e.getSource() == buttonClose) {
             getController().closeView();
-        }
-        else if (e.getSource() == buttonChoice ){
+        } else {
             getController().notifyPlayersSelected();
-           /* mainPanel.remove(jLayeredPane1First);
-            mainPanel.add(jLayeredPaneSecond);
-            mainPanel.revalidate();*/
-
-         //   System.out.println("MAINFRAME  is mousse listener super ca marche2 + mousse =" + " dans le thread EDT = " + SwingUtilities.isEventDispatchThread());
         }
     }
 
