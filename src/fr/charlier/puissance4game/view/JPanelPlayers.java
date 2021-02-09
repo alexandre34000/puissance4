@@ -6,56 +6,36 @@ import java.awt.*;
 public class JPanelPlayers extends JPanel {
 
 
-    /**
-     * Creates a new JPanel with the specified layout manager and buffering
-     * strategy.
-     *
-     * @param layout           the LayoutManager to use
-     * @param isDoubleBuffered a boolean, true for double-buffering, which
-     *                         uses additional memory space to achieve fast, flicker-free
-     */
-  /*  public JPanelEstWest(LayoutManager layout, boolean isDoubleBuffered, Color colorButton) {
-        super(layout, isDoubleBuffered);
-        this.colorButton = colorButton;
-    }*/
+    JLabel jLabel;
     private Color colorFillOval = null;
-    private Color colorBackground = new Color(0,0,0,0);
-
-
-
+    private Color colorBackground = new Color(0, 0, 0, 0);
+    private String playerName = "";
     private Color foregroundColor = Color.black;
-    private String text = null;
-  /*  private int width = 500;
-    private int height = 500;*/
 
 
-
-    public JPanelPlayers(Color colorFillOval, String text){
-
+    public JPanelPlayers(Color colorFillOval) {
+        // super(layout, isDoubleBuffered);
         super();
         this.colorFillOval = colorFillOval;
-      //  this.setBackground(this.colorBackground);
-        JLabel jLabel = new JLabel();
-        jLabel.setText(text);
-        jLabel.setSize(getWidth(),getHeight());
+        this.setBackground(this.colorBackground);
+        jLabel = new JLabel();
+        jLabel.setText(playerName);
+        jLabel.setSize(getWidth(), getHeight());
         jLabel.setBackground(colorBackground);
         jLabel.setOpaque(true);
-        jLabel.setText(text);
         jLabel.setHorizontalAlignment(JLabel.CENTER);
         jLabel.setVerticalAlignment(JLabel.CENTER);
         jLabel.setForeground(foregroundColor);
         jLabel.setFont(new Font("SansSerif", Font.PLAIN, 50));
-        // this.setLayout()
         add(jLabel);
         setOpaque(false);
     }
 
 
-    public void paintComponent (Graphics g){
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
-
         g.setColor(this.colorFillOval);
-        g.fillOval(0, (getHeight()/2)-50, getWidth(), getWidth());
+        g.fillOval(0, (getHeight() / 2) - 50, getWidth(), getWidth());
     }
 
 
@@ -75,33 +55,15 @@ public class JPanelPlayers extends JPanel {
         this.foregroundColor = foregroundColor;
     }
 
-
-
-
-  /*  public Color getColorButton() {
-        return colorButton;
+    public String getPlayerName() {
+        return playerName;
     }
 
-    public void setColorButton(Color colorButton) {
-        this.colorButton = colorButton;
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+        jLabel.setText(playerName);
+
+        System.out.println("JPanelPlayer playername =" + playerName);
     }
 
-    @Override
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    @Override
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-*/
 }

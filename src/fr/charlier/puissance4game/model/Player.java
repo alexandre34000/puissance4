@@ -1,7 +1,7 @@
 package fr.charlier.puissance4game.model;
 
 import java.awt.*;
-import java.util.List;
+
 
 public class Player {
 

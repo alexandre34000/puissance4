@@ -27,16 +27,23 @@ public class GameBoard {
     private int linesNumber = Constante.ROWS;
     private int columnSize = Constante.JPANEL_FONT_WIDTH / Constante.COLUMNS;
     private int rowSize = Constante.JPANEL_ANIMATE_HEIGHT / Constante.COLUMNS;
+    private String player1Name;
+    private String player2Name;
 
 
     public GameBoard() {
         super();
         listeners = new EventListenerList();
-        player1 = new Player("Player 1", Constante.TOKEN_COLOR_PLAYER1);
-        player2 = new Player("Player 2", Constante.TOKEN_COLOR_PLAYER2);
+
     }
 
-    public void playersSelected(){
+    public void playersSelected(String player1Name, String player2Name) {
+        this.player1Name = player1Name;
+        this.player2Name = player2Name;
+        player1 = new Player(player1Name, Constante.TOKEN_COLOR_PLAYER1);
+        player2 = new Player(player2Name, Constante.TOKEN_COLOR_PLAYER2);
+
+
         fireChangeScreen();
     }
 
@@ -67,7 +74,9 @@ public class GameBoard {
         return boardArray;
     }
 
-    /* find free space in the boardArray for accept new token and set values inside */
+    /**
+     * find free space in the boardArray for accept new token and set values inside
+     */
     public int fillBoard() {
 
         int columnNumber = findColumnNumber();
@@ -109,11 +118,10 @@ public class GameBoard {
 
         if (Math.abs(checkWinnerColumn) == 4 || Math.abs(checkWinnerRow) == 4 ||
                 Math.abs(checkWinnerDiagonaleRToL) == 4 || Math.abs(checkWinnerDiagonaleLToR) == 4) {
-
-           winnerFounded();
+            winnerFounded();
             return true;
         } else {
-             winnerNotfounded();
+            winnerNotfounded();
             return false;
 
         }
@@ -125,12 +133,10 @@ public class GameBoard {
         } else {
             playerName = player2.getPlayerName();
         }
-     //   fireWinnerFounded();
     }
 
     public void winnerNotfounded() {
         this.isPlayer1 = !isPlayer1;
-      //  changePlayer();
     }
 
 
@@ -162,7 +168,9 @@ public class GameBoard {
         return totalRow;
     }
 
-    // check Alignement of same four Token diagonal right to left
+    /**
+     * check Alignement of same four Token diagonal right to left
+     */
     public int checkAlignementOfSameFourTokenDiagonalRightToLeft() {
 
         ArrayList<Board> diagonalRL = new ArrayList<>();
@@ -180,7 +188,9 @@ public class GameBoard {
         return checkTotalOfDiagonal(diagonalRL);
     }
 
-    // check Alignement of diagonal left to right
+    /**
+     * check Alignement of diagonal left to right
+     */
     public int checkAlignementOfSameFourTokenDiagonalLeftToRight() {
 
         ArrayList<Board> diagonalLR = new ArrayList<>();
@@ -198,7 +208,9 @@ public class GameBoard {
         return checkTotalOfDiagonal(diagonalLR);
     }
 
-    // Check total of diagonal
+    /**
+     * Check total of diagonal
+     */
     public int checkTotalOfDiagonal(ArrayList<Board> list) {
         int totalDiagonal = list.stream()
                 .filter(c -> c.getValueOfToken() != 0)
@@ -207,24 +219,32 @@ public class GameBoard {
         return totalDiagonal;
     }
 
-    /*find the last element free in the column of Board*/
+    /**
+     * find the last element free in the column of Board
+     */
     public Board findLastElement() {
         return boardArray.stream().filter(c -> c.getColumn() == 0 && c.getColor() == null).reduce((first, second) -> second).get();
     }
 
-    // return the number of column
+    /**
+     * return the number of column
+     */
     public int findColumnNumber() {
         int posX = (getPoint().x / columnSize);
         return posX;
     }
 
-    // return the number of row
+    /**
+     * return the number of row
+     */
     public int findRowNumber() {
         int posY = getPoint().y / rowSize;
         return posY;
     }
 
-    //return the number of the column and the row for check alignment of diagonal left-right and right-left
+    /**
+     * return the number of the column and the row for check alignment of diagonal left-right and right-left
+     */
     public Point findPositionToken() {
         Point tokenPosition = new Point();
         tokenPosition.x = newPointEnd.x / Constante.TOKEN_WIDTH;
@@ -232,7 +252,9 @@ public class GameBoard {
         return tokenPosition;
     }
 
-    /*  return coordonnate of position start and set start position*/
+    /**
+     * return coordonnate of position start and set start position
+     */
     public Point findStartPosition() {//findStartPosition
         Point startPosition = new Point();
         int posYStart = 0;
@@ -241,7 +263,9 @@ public class GameBoard {
         return startPosition;
     }
 
-    /* return coordonnate of position finish for row and column */
+    /**
+     * return coordonnate of position finish for row and column
+     */
     public Point findEndPosition(int posYFinale, int posXFinale) {
         Point endPosition = new Point();
         endPosition.x = posXFinale;
@@ -249,29 +273,9 @@ public class GameBoard {
         return endPosition;
     }
 
-    public int getNbTokenAlignedInsideColumn() {
-
-        return 0;
-    }
-
-  /*  public void goAnimatePanel() {
-
-        int speed = 10;
-
-        for (int i = 0; i < newPointEnd.y / speed; i++) {
-            newPointStart.y = i * speed;
-            firePointsChanged();
-            try {
-                Thread.sleep(20);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }*/
-
     public void changePlayer() {
 
-        Color colorTransparent =new Color(0, 0, 0, 0);
+        Color colorTransparent = new Color(0, 0, 0, 0);
 
         if (isPlayer1) {
             player1.setColor(Constante.TOKEN_COLOR_PLAYER1);
@@ -334,12 +338,24 @@ public class GameBoard {
         this.playerName = playerName;
     }
 
-    public void addGameListener(GameListener listener) {
-        listeners.add(GameListener.class, listener);
+    public String getPlayer1Name() {
+        return player1Name;
     }
 
-    public void removeGameListener(GameListener l) {
-        listeners.remove(GameListener.class, l);
+    public void setPlayer1Name(String player1Name) {
+        this.player1Name = player1Name;
+    }
+
+    public String getPlayer2Name() {
+        return player2Name;
+    }
+
+    public void setPlayer2Name(String player2Name) {
+        this.player2Name = player2Name;
+    }
+
+    public void addGameListener(GameListener listener) {
+        listeners.add(GameListener.class, listener);
     }
 
     public void fireColorChanged() {
@@ -347,7 +363,6 @@ public class GameBoard {
 
         for (GameListener listener : listenerList) {
             listener.colorChanged(new GameChangedEvent(this, getColor()));
-
         }
     }
 
@@ -355,14 +370,11 @@ public class GameBoard {
         GameListener[] listenerList = listeners.getListeners(GameListener.class);
 
         for (GameListener listener : listenerList) {
-
             listener.pointChanged(new GameChangedEvent(this, getNewPointStart(), getNewPointEnd()));
-
         }
     }
 
     public void firePlayerChanged() {
-
         GameListener[] listenerList = listeners.getListeners(GameListener.class);
 
         for (GameListener listener : listenerList) {
@@ -374,7 +386,6 @@ public class GameBoard {
         GameListener[] listenerList = listeners.getListeners(GameListener.class);
 
         for (GameListener listener : listenerList) {
-
             listener.winnerFounded(new GameChangedEvent(this, getPlayerName(), getColor()));
         }
     }
@@ -383,20 +394,41 @@ public class GameBoard {
         GameListener[] listenerList = listeners.getListeners(GameListener.class);
 
         for (GameListener listener : listenerList) {
-
             listener.restartInvoked(new GameChangedEvent(this));
         }
     }
 
-    public void fireChangeScreen(){
+    public void fireChangeScreen() {
         GameListener[] listenerList = listeners.getListeners(GameListener.class);
 
         for (GameListener listener : listenerList) {
-
-            listener.changeScreen(new GameChangedEvent(this));
+            listener.changeScreen(new GameChangedEvent(this, getPlayer1Name(), getPlayer2Name()));
         }
     }
 
 
-
 }
+
+  /*  public int getNbTokenAlignedInsideColumn() {
+
+        return 0;
+    }*/
+
+   /* public void removeGameListener(GameListener l) {
+        listeners.remove(GameListener.class, l);
+    }*/
+
+ /*  public void goAnimatePanel() {
+
+        int speed = 10;
+
+        for (int i = 0; i < newPointEnd.y / speed; i++) {
+            newPointStart.y = i * speed;
+            firePointsChanged();
+            try {
+                Thread.sleep(20);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }*/

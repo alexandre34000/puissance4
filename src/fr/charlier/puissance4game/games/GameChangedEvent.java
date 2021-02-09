@@ -7,14 +7,13 @@ public class GameChangedEvent extends EventObject {
 
     private Color newColor;
     private Color newColorJLabel;
-
-
+    private String player2Name;
+    private String player1Name;
     private Color colorPlayer1;
     private Color colorPlayer2;
     private Point newPointStart;
     private String newText;
     private Point newPointEnd;
-
 
 
     /**
@@ -26,7 +25,6 @@ public class GameChangedEvent extends EventObject {
     public GameChangedEvent(Object source, Color color) {
         super(source);
         this.newColor = color;
-
     }
 
     public GameChangedEvent(Object source, Point pointStart, Point pointEnd) {
@@ -47,14 +45,15 @@ public class GameChangedEvent extends EventObject {
         this.newColorJLabel = colorBoard;
     }
 
-    public GameChangedEvent(Object source){
+    public GameChangedEvent(Object source, String player1Name, String player2Name) {
         super(source);
+        this.player2Name = player2Name;
+        this.player1Name = player1Name;
     }
 
-
-
-
-
+    public GameChangedEvent(Object source) {
+        super(source);
+    }
 
     public Color getNewColor() {
         return newColor;
@@ -84,24 +83,12 @@ public class GameChangedEvent extends EventObject {
         return colorPlayer2;
     }
 
+    public String getPlayer2Name() {
+        return player2Name;
+    }
 
-
-
+    public String getPlayer1Name() {
+        return player1Name;
+    }
 
 }
- /*   public Player getNewPlayer1() {
-        return newPlayer1;
-    }
-
-    public Player getNewPlayer2() {
-        return newPlayer2;
-    }
-    private Player newPlayer1;
-    private Player newPlayer2;*/
- /*  public GameChangedEvent(Object source, Player player1, Player player2) {
-        super(source);
-        this.newPlayer1 = player1;
-        this.newPlayer2 = player2;
-
-
-    }*/

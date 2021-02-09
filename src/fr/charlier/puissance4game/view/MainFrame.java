@@ -4,29 +4,27 @@ import fr.charlier.puissance4game.controller.GameController;
 import fr.charlier.puissance4game.controller.GameView;
 import fr.charlier.puissance4game.controller.Constante;
 import fr.charlier.puissance4game.games.GameChangedEvent;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+
 
 public class MainFrame extends GameView implements ActionListener, ComponentListener {
 
 
     JFrame jFrame = null;
     JPanel mainPanel = null;
-    JLayeredPane jLayeredPaneSecond = null;
-    JLayeredPane jLayeredPane1First = null;
-    JPanelImage backgroundImageSecondPanel = new JPanelImage("salon.png");
-    JPanelImage beackgroundImageFirstPanel = new JPanelImage("salon.png");
-    JPanel welcomePanel = new JPanel();
-    JPanelPlayers jPanelLeft = new JPanelPlayers(Constante.TOKEN_COLOR_PLAYER1, "PLAYER 1");
-    JPanelPlayers jPanelRight = new JPanelPlayers(Constante.TOKEN_COLOR_PLAYER2, "PLAYER 2");
+    JLayeredPane playView = null;
+    WelcomeView welcomeView;
+    JPanelImage backgroundImagePlayView = new JPanelImage("salon.png");
+    JPanelImage beackgroundImageWelcomeView = new JPanelImage("salon.png");
+    JPanelPlayers jPanelLeft;
+    JPanelPlayers jPanelRight;
     JPanelWinner jPanelWinner = new JPanelWinner();
     JPanelImage imagePanelFont = new JPanelImage("puissance41.png");
     JPanelAnimate ajp = new JPanelAnimate();
     JButton buttonStart = null;
     JButton buttonClose = null;
-    JButton buttonChoice = null;
 
     Boolean start = true;
     Dimension size = null;
@@ -35,6 +33,7 @@ public class MainFrame extends GameView implements ActionListener, ComponentList
 
     public MainFrame(GameController controller) {
         super(controller);
+        welcomeView = new WelcomeView(controller);
         createAndShowGUI();
     }
 
@@ -44,8 +43,6 @@ public class MainFrame extends GameView implements ActionListener, ComponentList
      * event-dispatching thread.
      */
     public void createAndShowGUI() {
-
-        //Create and set up the window.
 
         jFrame = new JFrame();
         jFrame.setTitle("puissance 4");
@@ -58,24 +55,17 @@ public class MainFrame extends GameView implements ActionListener, ComponentList
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
         mainPanel.addComponentListener(this);
 
-        /*  Creation du premier ecran*/
+        welcomeView.setBounds(0,0,800,700);
 
-        jLayeredPane1First = new JLayeredPane();
-        beackgroundImageFirstPanel.setBounds(0, 0, 1000, 700);
-        buttonChoice = new JButton("Valider");
-        buttonChoice.setBounds(50, 900, 100, 50);
-        buttonChoice.addActionListener(this);
-        welcomePanel.setBounds(400, 100, 800, 800);
-        welcomePanel.setBackground(Color.red);
-        welcomePanel.add(buttonChoice);
-        jLayeredPane1First.add(beackgroundImageFirstPanel, new Integer(0), 0);
-        jLayeredPane1First.add(welcomePanel, new Integer(1), 1);
+        //Creation du deuxieme ecran
+       playView = new JLayeredPane();
 
-        /*Creation du deuxieme ecran*/
-        jLayeredPaneSecond = new JLayeredPane();
+        backgroundImagePlayView.setBounds(0, 0, 800, 700);
 
-        backgroundImageSecondPanel.setBounds(0, 0, 800, 700);
+        jPanelLeft = new JPanelPlayers(Constante.TOKEN_COLOR_PLAYER1);
         jPanelLeft.setBounds(50, 300, Constante.JPANEL_ESTWEST_WIDTH, Constante.JPANEL_ESTWEST_HEIGHT);
+
+        jPanelRight = new JPanelPlayers(Constante.TOKEN_COLOR_PLAYER2);
         jPanelRight.setBounds(1700, 300, Constante.JPANEL_ESTWEST_WIDTH, Constante.JPANEL_ESTWEST_HEIGHT);
 
         ajp.setBounds(400, 100, Constante.JPANEL_ANIMATE_WIDTH, Constante.JPANEL_ANIMATE_HEIGHT);
@@ -87,7 +77,7 @@ public class MainFrame extends GameView implements ActionListener, ComponentList
 
         imagePanelFont.setBounds(400, 200, Constante.JPANEL_FONT_WIDTH, Constante.JPANEL_FONT_HEIGHT);
         imagePanelFont.setOpaque(false);
-        //  imagePanelFont.addMouseListener(new MyMouseAdapter() );
+
         buttonStart = new JButton("Start");
         buttonStart.setBounds(50, 900, 100, 50);
         buttonStart.addActionListener(this);
@@ -96,19 +86,18 @@ public class MainFrame extends GameView implements ActionListener, ComponentList
         buttonClose.setBounds(1750, 900, 100, 50);
         buttonClose.addActionListener(this);
 
-        jLayeredPaneSecond.add(backgroundImageSecondPanel, new Integer(0), 0);
-        jLayeredPaneSecond.add(jPanelLeft, new Integer(1), 1);
-        jLayeredPaneSecond.add(jPanelRight, new Integer(1), 1);
-        jLayeredPaneSecond.add(ajp, new Integer(3), 3);
-        jLayeredPaneSecond.add(imagePanelFont, new Integer(4), 4);
-        jLayeredPaneSecond.add(jPanelWinner, new Integer(5), 5);
-        jLayeredPaneSecond.add(buttonStart, new Integer(1), 1);
-        jLayeredPaneSecond.add(buttonClose, new Integer(1), 1);
+        playView.add(backgroundImagePlayView, new Integer(0), 0);
+        playView.add(jPanelLeft, new Integer(1), 1);
+        playView.add(jPanelRight, new Integer(1), 1);
+        playView.add(ajp, new Integer(3), 3);
+        playView.add(imagePanelFont, new Integer(4), 4);
+        playView.add(jPanelWinner, new Integer(5), 5);
+        playView.add(buttonStart, new Integer(1), 1);
+        playView.add(buttonClose, new Integer(1), 1);
 
-        /*  adjonction des panels    */
-        mainPanel.add(jLayeredPane1First);
+        //adjonction des panels
+        mainPanel.add(welcomeView);
         jFrame.setContentPane(mainPanel);
-
     }
 
 
@@ -124,15 +113,12 @@ public class MainFrame extends GameView implements ActionListener, ComponentList
             imagePanelFont.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseReleased(MouseEvent evt) {
-                    //  super.mouseReleased(evt);
                     imagePanelFont.removeMouseListener(this);
                     getController().notifyPointChanged(evt.getPoint());
                     isMouseListener = false;
-
-                    System.out.println("MAINFRAME  is mousse listener super ca marche2 + mousse =" + " dans le thread EDT = " + SwingUtilities.isEventDispatchThread());
+                    System.out.println("MAINFRAME  mouseListenerAcctived dans le thread EDT = " + SwingUtilities.isEventDispatchThread());
                 }
             });
-
         }
     }
 
@@ -182,7 +168,6 @@ public class MainFrame extends GameView implements ActionListener, ComponentList
     public void winnerFounded(GameChangedEvent event) {
         jPanelWinner.setText(event.getNewText() + " est le gagnant");
         jPanelWinner.setBackground(event.getNewColorJLabel());
-        //  jPanelWinner.setVisible(true);
     }
 
     @Override
@@ -193,14 +178,19 @@ public class MainFrame extends GameView implements ActionListener, ComponentList
 
     @Override
     public void changeScreen(GameChangedEvent event) {
-        mainPanel.remove(jLayeredPane1First);
-        mainPanel.add(jLayeredPaneSecond);
+        System.out.println( "change screen dans Main Frame = "+event.getPlayer1Name());
+
+        jPanelRight.setPlayerName(event.getPlayer2Name());
+        jPanelLeft.setPlayerName(event.getPlayer1Name());
+
+        mainPanel.remove(welcomeView);
+        mainPanel.add(playView);
         mainPanel.revalidate();
         System.out.println("click toto sur edt" + SwingUtilities.isEventDispatchThread());
     }
 
 
-    /* Click on button start*/
+    /** Click on buttons start/restart or close*/
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == buttonStart) {
@@ -216,7 +206,8 @@ public class MainFrame extends GameView implements ActionListener, ComponentList
         } else if (e.getSource() == buttonClose) {
             getController().closeView();
         } else {
-            getController().notifyPlayersSelected();
+            System.out.println("choix du button MainFrame non reconnu");
+           // getController().notifyPlayersSelected();
         }
     }
 
@@ -230,15 +221,16 @@ public class MainFrame extends GameView implements ActionListener, ComponentList
 
         size = mainPanel.getSize();
         size.setSize(mainPanel.getHeight() * 2.03, mainPanel.getHeight());
-        beackgroundImageFirstPanel.setSize(size);
-        backgroundImageSecondPanel.setSize(size);
+        beackgroundImageWelcomeView.setSize(size);
+        backgroundImagePlayView.setSize(size);
         jPanelLeft.setSize(mainPanel.getWidth() / 8, mainPanel.getHeight() / 2);
         jPanelRight.setSize(mainPanel.getWidth() / 8, mainPanel.getHeight() / 2);
         jPanelRight.setLocation((mainPanel.getWidth() / 8 * 7) - 50, 300);
         imagePanelFont.setLocation((mainPanel.getWidth() / 2) - (imagePanelFont.getWidth() / 2), (mainPanel.getHeight() / 2) - (imagePanelFont.getHeight() / 2));
         ajp.setLocation(imagePanelFont.getX(), imagePanelFont.getY() - 100);
-        welcomePanel.setLocation(imagePanelFont.getX(), imagePanelFont.getY());
         jPanelWinner.setLocation(imagePanelFont.getX(), (imagePanelFont.getHeight() / 2) + Constante.JPANEL_WINNER_HEIGHT);
+        welcomeView.toBeResized(size);
+
     }
 
     /**
@@ -293,88 +285,5 @@ public class MainFrame extends GameView implements ActionListener, ComponentList
     public void componentHidden(ComponentEvent e) {
 
     }
-
-    /**
-     * Invoked when the mouse button has been clicked (pressed
-     * and released) on a component.
-     *
-     * @param e
-     */
- /*   @Override
-    public void mouseClicked(MouseEvent e) {
-
-
-    }*/
-
-    /**
-     * Invoked when a mouse button has been pressed on a component.
-     *
-     * @param e
-    /*    *//*
-    @Override
-    public void mousePressed(MouseEvent e) {
-      *//*  if (e.getSource() == jPanelLeft) {
-            getController().notifyPlayerChanged("player1");
-        } else if (e.getSource() == jPanelRight) {
-            getController().notifyPlayerChanged("player2");
-        }*//*
-    }
-
-
-    *//**
-     * Invoked when the mouse enters a component.
-     *
-     * @param e
-     *//*
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    *//**
-     * Invoked when the mouse exits a component.
-     *
-     * @param e
-     *//*
-    @Override
-    public void mouseExited(MouseEvent e) {
-
-    }*/
-
-    /*
-
-    class MyMouseAdapter extends MouseAdapter{
-        public Boolean getM(){
-            return mousse;
-        }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                super.mouseClicked(e);
-
-                System.out.println("super ca marche mousse=" +mousse);
-                //  imagePanelFont.removeMouseListener(this);
-                if (mousse) {
-                    setMousse(false);
-                    getController().notifyPointChanged(e.getPoint());
-
-                }
-                System.out.println("super ca marche2 + mousse ="+mousse);
-            }
-
-    }
-*/
-
-//mouseListenerIsActive = true;
-       /* MouseListener ml =new MouseAdapter() {
-            public void mouseReleased(MouseEvent e) {
-                getController().notifyPointChanged(e.getPoint());
-            }
-        };
-        if(isActive){
-            imagePanelFont.addMouseListener(ml);
-              }
-        else{ imagePanelFont.removeMouseListener(ml);
-        }*/
 
 }

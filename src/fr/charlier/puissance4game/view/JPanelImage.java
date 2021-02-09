@@ -4,26 +4,19 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 
 public class JPanelImage extends JPanel {
 
-
-    String urlText = "";
-    int sizeX = 0;
-    int sizeY = 0;
+    private String urlText = "";
     private BufferedImage image = null;
 
 
-    public JPanelImage(){
+    public JPanelImage() {
         super();
-
-
     }
 
-    public JPanelImage(String text){
+    public JPanelImage(String text) {
         super();
         this.urlText = text;
         try {
@@ -31,7 +24,7 @@ public class JPanelImage extends JPanel {
             if (url == null) {
                 System.out.println("Could find image!");
             } else {
-            //    System.out.println("image chargée");
+                //    System.out.println("image chargée");
             }
             image = ImageIO.read(url);
         } catch (Exception ex) {
@@ -43,7 +36,7 @@ public class JPanelImage extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.setColor(Color.red);
-        g.drawImage(image,0,0,getWidth(),getHeight(),null);
+        g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 
     }
 }
@@ -90,10 +83,10 @@ public class JPanelImage extends JPanel {
     }*/
 
 
-    //  public void buildImagePanel(String urlText, int sizeX, int sizeY){
+//  public void buildImagePanel(String urlText, int sizeX, int sizeY){
 
-    //        pan.setOpaque(false);
-    // setBackground(Color.red) {
+//        pan.setOpaque(false);
+// setBackground(Color.red) {
 
 
 
