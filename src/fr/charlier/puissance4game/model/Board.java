@@ -12,10 +12,19 @@ public class Board {
     private int posXFinale = 0;
     private Color colorToken = Color.white;
     private int valueOfToken = 0;
+    private int tokenMax =0;
+    private Point point;
+    private String lineName = "";
 
-    public Board() {
+    public Board(String lineName, Point point, int tokenMax) {
+        this.lineName = lineName;
+        this.point =point;
+        this.tokenMax =tokenMax;
     }
 
+    public Board(){
+
+    }
 
     public Board(int column, int row, int posXOrigin, int posYOrigin, int posXFinale, int posYFinale, int valueOfToken, Color colorOfToken) {
 
@@ -29,10 +38,15 @@ public class Board {
         this.valueOfToken = valueOfToken;
     }
 
-    @Override
+  /*  @Override
     public String toString() {
         return " BoardGame have in the column : " + column + " in the row : " + row + "for  posXOrigin :" + this.posXOrigin + "and for posYOrigin : " + this.posYOrigin + "and for posXFinale" + this.posXFinale + " and for posYFinale : " + this.posYFinale +
-                " and for color : " + this.colorToken + " ValueOfToken = " + this.valueOfToken;
+                " and for color : " + this.colorToken + " ValueOfToken = " + this.valueOfToken+ "valueMaxline : "+ this.tokenMax + " point : "+this.point;
+    }*/
+
+    @Override
+    public String toString() {
+        return "line name :"+this.lineName+ " ; valueMaxline : "+ this.tokenMax + " ; point : "+this.point;
     }
 
     public int getRow() {
@@ -97,6 +111,22 @@ public class Board {
 
     public void setValueOfToken(int valueOfToken) {
         this.valueOfToken = valueOfToken;
+    }
+
+    public int getTokenMax() {
+        return tokenMax;
+    }
+
+    public void setTokenMax(int tokenMax) {
+        this.tokenMax = tokenMax;
+    }
+
+    public Point getPoint() {
+        return point;
+    }
+
+    public void setPoint(Point point) {
+        this.point = point;
     }
 
 

@@ -15,6 +15,16 @@ public class GameChangedEvent extends EventObject {
     private String newText;
     private Point newPointEnd;
 
+    public String getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(String currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
+
+    private String currentPlayer;
+
 
     /**
      * Constructs a prototypical Event.
@@ -33,6 +43,7 @@ public class GameChangedEvent extends EventObject {
         this.newPointEnd = pointEnd;
     }
 
+    /** firePlayerChanged()*/
     public GameChangedEvent(Object source, Color colorPlayer1, Color colorPlayer2) {
         super(source);
         this.colorPlayer1 = colorPlayer1;

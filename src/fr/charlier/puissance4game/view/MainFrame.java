@@ -30,6 +30,10 @@ public class MainFrame extends GameView implements ActionListener, ComponentList
     Dimension size = null;
     Boolean isMouseListener = false;
 
+    Color newPlayerColorCalled ;
+
+   // private String currentPlayer;
+
 
     public MainFrame(GameController controller) {
         super(controller);
@@ -108,6 +112,7 @@ public class MainFrame extends GameView implements ActionListener, ComponentList
 
     @Override
     public void mouseListenerActivated() {
+
         if (!isMouseListener) {
             isMouseListener = true;
             imagePanelFont.addMouseListener(new MouseAdapter() {
@@ -116,10 +121,10 @@ public class MainFrame extends GameView implements ActionListener, ComponentList
                     imagePanelFont.removeMouseListener(this);
                     getController().notifyPointChanged(evt.getPoint());
                     isMouseListener = false;
-                    System.out.println("MAINFRAME  mouseListenerAcctived dans le thread EDT = " + SwingUtilities.isEventDispatchThread());
                 }
             });
         }
+
     }
 
     @Override
@@ -135,6 +140,7 @@ public class MainFrame extends GameView implements ActionListener, ComponentList
     @Override
     public void colorChanged(GameChangedEvent event) {
         ajp.setColor(event.getNewColor());
+        newPlayerColorCalled = event.getNewColor();
     }
 
     @Override
@@ -178,7 +184,7 @@ public class MainFrame extends GameView implements ActionListener, ComponentList
 
     @Override
     public void changeScreen(GameChangedEvent event) {
-        System.out.println( "change screen dans Main Frame = "+event.getPlayer1Name());
+     //   System.out.println( "change screen dans Main Frame = "+event.getPlayer1Name());
 
         jPanelRight.setPlayerName(event.getPlayer2Name());
         jPanelLeft.setPlayerName(event.getPlayer1Name());
@@ -186,7 +192,7 @@ public class MainFrame extends GameView implements ActionListener, ComponentList
         mainPanel.remove(welcomeView);
         mainPanel.add(playView);
         mainPanel.revalidate();
-        System.out.println("click toto sur edt" + SwingUtilities.isEventDispatchThread());
+      //  System.out.println("click toto sur edt" + SwingUtilities.isEventDispatchThread());
     }
 
 

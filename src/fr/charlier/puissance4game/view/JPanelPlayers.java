@@ -63,7 +63,7 @@ public class JPanelPlayers extends JPanel {
         this.playerName = playerName;
         jLabel.setText(playerName);
 
-        System.out.println("JPanelPlayer playername =" + playerName);
+      //  System.out.println("JPanelPlayer playername =" + playerName);
     }
 
 }

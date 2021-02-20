@@ -9,6 +9,8 @@ public class GameController {
 
     public GameView mainFrameView = null;
     public GameBoard model = null;
+    private String playerName1;
+    private String playerName2;
 
 
     public GameController(GameBoard model) {
@@ -25,11 +27,11 @@ public class GameController {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                System.out.println(" thread edt dans GameController displayView du run =" + SwingUtilities.isEventDispatchThread());
+             //   System.out.println(" thread edt dans GameController displayView du run =" + SwingUtilities.isEventDispatchThread());
                 mainFrameView.display();
             }
         });
-        System.out.println(" thread edt dans GameController displayView =" + SwingUtilities.isEventDispatchThread());
+      //  System.out.println(" thread edt dans GameController displayView =" + SwingUtilities.isEventDispatchThread());
     }
 
 
@@ -42,6 +44,8 @@ public class GameController {
     }
 
     public void notifyPlayersSelected(String playerName1, String playerName2) {
+        this.playerName1 = playerName1;
+        this.playerName2 = playerName2;
         model.playersSelected(playerName1, playerName2);
     }
 
@@ -51,17 +55,23 @@ public class GameController {
     }
 
     public void notifyAnimateTerminated() {
+
         if (model.checkIfWinner()) {
             model.fireWinnerFounded();
             mainFrameView.displayWinner();
         } else {
-            model.changePlayer();
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    mainFrameView.mouseListenerActivated();
-                }
-            });
+           String currentPlayer= model.changePlayer();
+            if(currentPlayer != "IA") {
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        mainFrameView.mouseListenerActivated();
+                    }
+                });
+            }
+            else{
+                model.playerIsIA();
+            }
         }
     }
 

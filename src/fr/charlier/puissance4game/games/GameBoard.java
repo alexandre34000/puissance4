@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class GameBoard {
 
     private ArrayList<Board> boardArray = new ArrayList<>();
+    IAPlayer iaPlayer= new IAPlayer();
     private boolean isPlayer1 = true;
     private String player;
     private Player player1 = null;
@@ -29,6 +30,7 @@ public class GameBoard {
     private int rowSize = Constante.JPANEL_ANIMATE_HEIGHT / Constante.COLUMNS;
     private String player1Name;
     private String player2Name;
+    private String currentPlayer;
 
 
     public GameBoard() {
@@ -63,9 +65,12 @@ public class GameBoard {
     public ArrayList<Board> buildArrayBoard() {
         for (int i = 0; i < columnsNumber; i++) {
             for (int j = 0; j < linesNumber; j++) {
-                boardArray.add(new Board(i, j, 0, 0, 0, 0, 0, null));
+                boardArray.add(new Board(i, j, i*110, 0, i*110, (110+(j*110)), 0, null));
             }
         }
+
+        /*  for (int i=0; i< boardArray.size(); i++){
+            System.out.println(boardArray.get(i));}*/
         return boardArray;
     }
 
@@ -92,8 +97,8 @@ public class GameBoard {
             return 1;
         } else {
             newPointEnd = findEndPosition(last.getRow(), last.getColumn());
-            last.setPosXFinale(newPointEnd.x);
-            last.setPosYFinale(newPointEnd.y);
+          /*  last.setPosXFinale(newPointEnd.x);
+            last.setPosYFinale(newPointEnd.y);*/
             if (isPlayer1) {
                 setColor(player1.getColor());
             } else {
@@ -105,6 +110,10 @@ public class GameBoard {
             } else {
                 last.setValueOfToken((Constante.TOKEN_VALUE_PLAYER2));
             }
+
+           /* for (int i=0; i< boardArray.size(); i++){
+            System.out.println(boardArray.get(i));}*/
+
             firePointsChanged();
             return 0;
         }
@@ -268,24 +277,40 @@ public class GameBoard {
      */
     public Point findEndPosition(int posYFinale, int posXFinale) {
         Point endPosition = new Point();
-        endPosition.x = posXFinale;
+      //  endPosition.x = posXFinale;
+        endPosition.x = posXFinale * columnSize;
         endPosition.y = (posYFinale * rowSize) + rowSize;
         return endPosition;
     }
 
-    public void changePlayer() {
+    public String changePlayer() {
 
         Color colorTransparent = new Color(0, 0, 0, 0);
 
         if (isPlayer1) {
+            currentPlayer= player1.getPlayerName();
             player1.setColor(Constante.TOKEN_COLOR_PLAYER1);
             player2.setColor(colorTransparent);
         } else {
+            currentPlayer= player2.getPlayerName();
             player1.setColor(colorTransparent);
             player2.setColor(Constante.TOKEN_COLOR_PLAYER2);
         }
         firePlayerChanged();
+        return currentPlayer;
     }
+
+
+    public void playerIsIA(){
+        Point value = new Point();
+
+        value = iaPlayer.selectedCoordonnate(boardArray);
+
+        setPoint(value);
+    }
+
+
+
 
     public String getPlayer() {
         return player;
@@ -370,6 +395,7 @@ public class GameBoard {
         GameListener[] listenerList = listeners.getListeners(GameListener.class);
 
         for (GameListener listener : listenerList) {
+         //   System.out.println(getNewPointEnd()+ " : sont les points envoyés à MainFrame");
             listener.pointChanged(new GameChangedEvent(this, getNewPointStart(), getNewPointEnd()));
         }
     }
